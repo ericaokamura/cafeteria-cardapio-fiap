@@ -34,7 +34,7 @@ export default function ItemPedido({ idProduto, nomeProduto, valorUnitario, onSu
                     <h3 style={{marginRight: "20px"}}>Quantidade:</h3>
                     <input type="number" value={quantidade} onChange={handleQuantidadeChange} min="0"></input>
                 </div> 
-                <h3>Sub Total: {subtotal}</h3>
+                <h3>Sub Total: {subtotal.toFixed(2)}</h3>
             </div>
             <hr style={{border:"1px solid #ccc",margin:"20px 0"}}/>
         </>
