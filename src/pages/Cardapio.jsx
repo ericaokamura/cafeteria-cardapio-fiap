@@ -4,19 +4,44 @@ import Menu from '../components/Menu'
 import React, { useContext } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { CarrinhoContext } from '../util/CarrinhoContext'
+import { useState, useEffect } from 'react'
 
 
 export default function Cardapio() {
 
     const navigate = useNavigate();
 
-    const produtosDisponiveis = [
-      { idProduto: 1, nomeProduto: 'Produto A', valorUnitario: 30 },
-      { idProduto: 2, nomeProduto: 'Produto B', valorUnitario: 35 },
-      { idProduto: 3, nomeProduto: 'Produto C', valorUnitario: 20 }
-    ];
-  
+    const produtosDisponiveis = [];
+
     const { adicionarOuAtualizarItem } = useContext(CarrinhoContext);
+
+    const [produtos, setProdutos] = useState([]);
+
+    useEffect(() => {
+
+        const carregarProdutos = async () => {
+            try {
+                const response = await fetch('http://localhost:8090/produtos/', {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Access-Control-Allow-Origin': '*'
+                    }
+                });
+
+                if (!response.ok) {
+                    throw new Error('Erro na requisição do produto ' + item.idProduto);
+                }
+                const data = await response.json();
+                setProdutos(data);
+            } catch (error) {
+                console.error("Erro ao buscar produto:", error);
+            }
+        };
+
+        carregarProdutos();
+    })
+  
 
     const visualizarMeuPedido = () => {
         navigate('/meu-pedido');
@@ -44,12 +69,14 @@ export default function Cardapio() {
                 </div>
             </div>
             <div className="produtos">
-                    {produtosDisponiveis.map((produto) => (
+                    {produtos.map((produto, index) => (
                         <Produto
-                            key={produto.idProduto}
-                            produto={produto}
+                            key={index}
+                            idProduto={produto.id}
+                            nomeProduto={produto.descricao}
+                            valorUnitario={produto.valorUnitario}
                             onAdicionar={() =>
-                                adicionarOuAtualizarItem({ idProduto: produto.idProduto, nomeProduto: produto.nomeProduto, valorUnitario: produto.valorUnitario, quantidade: 1 })
+                                adicionarOuAtualizarItem({ idProduto: produto.id, nomeProduto: produto.descricao, valorUnitario: produto.valorUnitario, quantidade: 1 })
                             }
                         />
                     ))}
