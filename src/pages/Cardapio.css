@@ -1,0 +1,44 @@
+.categorias {
+    background-color: #676060;
+    width: 70%;
+    height: 60px;
+    margin: 0 auto;
+    justify-content: center;
+    display: flex;
+    margin-top: 150px;
+}
+
+.botoes {
+    display: block;
+}
+
+@media (max-width: 512px) {
+
+    h3 {
+        font-size: 8px;
+        font-weight: 500;
+    }
+}
+
+h3 {
+    color: #000000;
+    font-weight: 500;
+    height: 100%;
+    margin: 0 auto;
+    align-content: center;
+}
+
+.botao h4 {
+    font-size: 16px;
+    font-weight: 400px;   
+    text-align: center; 
+}
+
+.produtos{ 
+    border: 1px solid #000000 ;
+    text-align: center;
+    margin: 0 auto;
+    width: 70%;
+    margin-top: -100px;
+    padding-bottom: 30px;
+}
